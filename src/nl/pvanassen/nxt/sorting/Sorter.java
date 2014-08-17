@@ -5,13 +5,13 @@ import lejos.nxt.ColorSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
 
-public class Calibrate {
+public class Sorter {
 	private final Shute shute;
 	private final ColorSensor cs;
 	private final int diff;
 	private static final int BELT_SPEED = 100;
 	
-	public Calibrate() throws InterruptedException {
+	public Sorter() throws InterruptedException {
 		cs = new ColorSensor(SensorPort.S1);
 		diff = (int)Math.max(0, 78 - cs.getLightValue());
 		System.out.println("Base: " + cs.getLightValue());
@@ -29,7 +29,7 @@ public class Calibrate {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-		new Calibrate().execute();
+		new Sorter().execute();
 	}
 	
 	private void execute() {
