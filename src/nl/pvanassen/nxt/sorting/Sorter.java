@@ -4,18 +4,16 @@ import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import nl.pvanassen.nxt.sorting.detection.ColorCallback;
+import nl.pvanassen.nxt.sorting.detection.Detector;
 
-public class Sorter {
+public class Sorter implements ColorCallback {
 	private final Shute shute;
-	private final ColorSensor cs;
-	private final int diff;
-	private static final int BELT_SPEED = 100;
+	private final Detector detector;
+	private static final int BELT_SPEED = 104;
 	
 	public Sorter() throws InterruptedException {
-		cs = new ColorSensor(SensorPort.S1);
-		diff = (int)Math.max(0, 78 - cs.getLightValue());
-		System.out.println("Base: " + cs.getLightValue());
-		// 100 -> 3000
+		// 100 -> 3250
 		// 200 -> 1500
 		// 300 -> 1000
 		// 400 -> 750
@@ -26,24 +24,25 @@ public class Sorter {
 		shuteThread.start();
 		Motor.A.setSpeed(BELT_SPEED);
 		Motor.A.forward();
+		detector = new Detector(this, new ColorSensor(SensorPort.S1));
+		Thread detectorThread = new Thread(detector);
+		detectorThread.setDaemon(true);
+		detectorThread.start();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
 		new Sorter().execute();
 	}
 	
-	private void execute() {
-		MMColor oldColor = MMColor.TRACK;
-		MMColor color = MMColor.TRACK;
+	private void execute() throws InterruptedException {
 		while (!Button.ENTER.isDown()) {
-			color = Detector.getMMColor(cs);
-			if (color != oldColor) {
-				if (color != MMColor.TRACK) {
-					shute.detected(color);
-				}
-				oldColor = color;
-			}
+			Thread.sleep(250);
 		}
 		shute.stop();
+	}
+	
+	@Override
+	public void detected(MMColor color) {
+		shute.detected(color);
 	}
 }

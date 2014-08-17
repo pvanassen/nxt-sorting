@@ -33,10 +33,10 @@ class Shute implements Runnable {
 					Thread.sleep(50);
 				}
 				SortEntry entry = (SortEntry) colorQueue.pop();
-				System.out.println("Rotating to: " + entry.pos);
+//				System.out.println("Rotating to: " + entry.pos);
 				Motor.B.rotateTo(entry.pos);
 				long wait = entry.time - System.currentTimeMillis();
-				System.out.println("Wait " + wait + " ms");
+//				System.out.println("Wait " + wait + " ms");
 				Thread.sleep(Math.max(0, wait));
 			}
 		} catch (InterruptedException e) {

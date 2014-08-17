@@ -1,10 +1,53 @@
-package nl.pvanassen.nxt.sorting;
+package nl.pvanassen.nxt.sorting.detection;
 
 import lejos.nxt.ColorSensor;
 import lejos.nxt.ColorSensor.Color;
+import nl.pvanassen.nxt.sorting.MMColor;
 
-public class Detector {
-	static MMColor getMMColor(ColorSensor cs) {
+public class Detector implements Runnable {
+	private final ColorCallback colorCallback;
+	private final ColorSensor cs;
+	private boolean stop;
+
+	public Detector(ColorCallback colorCallback, ColorSensor cs) {
+		this.colorCallback = colorCallback;
+		this.cs = cs;
+	}
+
+	@Override
+	public void run() {
+		try {
+			MMColorCounter counter = new MMColorCounter();
+			MMColor color = MMColor.TRACK;
+			int tracks;
+			while (!stop) {
+				while (color == MMColor.TRACK) {
+					color = getMMColor(cs);
+					Thread.sleep(50);
+				}
+				tracks = 0;
+				while (tracks < 30) {
+					counter.count(color);
+					Thread.sleep(10);
+					color = getMMColor(cs);
+					if (color == MMColor.TRACK) {
+						tracks++;
+					}
+					System.out.println(color);
+				}
+				MMColor detected = counter.guess();
+				if (detected != MMColor.TRACK) {
+					colorCallback.detected(detected);
+				}
+				counter.reset();
+				Thread.sleep(50);
+			}
+		} catch (InterruptedException e) {
+			return;
+		}
+	}
+
+	private MMColor getMMColor(ColorSensor cs) {
 		Color raw = cs.getColor();
 		if (around(raw.getRed(), 85) && around(raw.getGreen(), 68)
 				&& around(raw.getBlue(), 62)) {
@@ -50,30 +93,28 @@ public class Detector {
 				&& around(raw.getBlue(), 146)) {
 			return MMColor.RED;
 		}
-/*		if (aroundPrecise(raw.getRed(), 146)
-				&& aroundPrecise(raw.getGreen(), 66)
-				&& aroundPrecise(raw.getBlue(), 66)) {
-			System.out.println("BG1: " + raw.getBackground());
+		if (around(raw.getRed(), 146)
+				&& around(raw.getGreen(), 66)
+				&& around(raw.getBlue(), 66)) {
 			return MMColor.BROWN;
-		}*/
-		if (aroundPrecise(raw.getRed(), 166)
-				&& aroundPrecise(raw.getGreen(), 99)
-				&& aroundPrecise(raw.getBlue(), 100)) {
-			System.out.println("BG2: " + raw.getBackground());
+		}
+		if (around(raw.getRed(), 166)
+				&& around(raw.getGreen(), 99)
+				&& around(raw.getBlue(), 100)) {
 			return MMColor.BROWN;
 		}
 		return MMColor.TRACK;
 	}
 
-	private static boolean between(int color, int lowLimit, int highLimit) {
+	private boolean between(int color, int lowLimit, int highLimit) {
 		return color > lowLimit && color < highLimit;
 	}
 
-	private static boolean around(int color, int value) {
+	private boolean around(int color, int value) {
 		return between(color, value - 20, value + 20);
 	}
 
-	private static boolean aroundPrecise(int color, int value) {
-		return between(color, value - 10, value + 10);
+	void stop() {
+		stop = true;
 	}
 }
