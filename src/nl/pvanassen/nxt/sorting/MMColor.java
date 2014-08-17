@@ -1,4 +1,4 @@
-package sorting;
+package nl.pvanassen.nxt.sorting;
 
 enum MMColor {
 	

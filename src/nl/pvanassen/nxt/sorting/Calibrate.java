@@ -1,4 +1,4 @@
-package sorting;
+package nl.pvanassen.nxt.sorting;
 
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;

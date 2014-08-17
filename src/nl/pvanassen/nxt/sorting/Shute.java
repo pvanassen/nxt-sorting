@@ -1,4 +1,4 @@
-package sorting;
+package nl.pvanassen.nxt.sorting;
 
 import java.util.LinkedList;
 import java.util.Queue;
