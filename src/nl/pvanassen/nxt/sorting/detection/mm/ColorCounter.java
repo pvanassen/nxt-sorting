@@ -11,7 +11,7 @@ class ColorCounter {
 	private static final int YELLOW = 5;
 	
 	void reset() {
-		for (int i=0;i!=6;i++) {
+		for (int i=0;i!=counts.length;i++) {
 			counts[i] = 0;
 		}
 	}
@@ -25,13 +25,14 @@ class ColorCounter {
 			case RED: counts[RED]++; break;
 			case YELLOW: counts[YELLOW]++; break;
 			case TRACK: return;
+			case NONE: return;
 		}
 	}
 	
 	MMColor guess() {
 		int color = 0;
 		int max = 0;
-		for (int i=0;i!=6;i++) { 
+		for (int i=0;i!=counts.length;i++) { 
 			int count = counts[i];
 			if (i == BROWN) {
 				// Lower count for brown

@@ -2,6 +2,8 @@ package nl.pvanassen.nxt.sorting.detection.mm;
 
 import lejos.nxt.ColorSensor;
 import lejos.nxt.ColorSensor.Color;
+import lejos.nxt.SensorPort;
+import lejos.nxt.TouchSensor;
 import nl.pvanassen.nxt.sorting.detection.ColorCallback;
 
 public class MMDetector implements Runnable {
@@ -26,7 +28,7 @@ public class MMDetector implements Runnable {
 					Thread.sleep(50);
 				}
 				tracks = 0;
-				while (tracks < 30) {
+				while (tracks < 2) {
 					counter.count(color);
 					Thread.sleep(10);
 					color = getMMColor(cs);
@@ -49,6 +51,9 @@ public class MMDetector implements Runnable {
 
 	private MMColor getMMColor(ColorSensor cs) {
 		Color raw = cs.getColor();
+		if (new TouchSensor(SensorPort.S2).isPressed()) {
+			System.out.println("R" + raw.getRed() + " G" + raw.getGreen() + "B " + raw.getBlue());
+		}
 		if (around(raw.getRed(), 85) && around(raw.getGreen(), 68)
 				&& around(raw.getBlue(), 62)) {
 			return MMColor.TRACK;
@@ -103,7 +108,7 @@ public class MMDetector implements Runnable {
 				&& around(raw.getBlue(), 100)) {
 			return MMColor.BROWN;
 		}
-		return MMColor.TRACK;
+		return MMColor.NONE;
 	}
 
 	private boolean between(int color, int lowLimit, int highLimit) {

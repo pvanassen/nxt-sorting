@@ -10,7 +10,7 @@ class ColorCounter {
 	private static final int YELLOW = 4;
 	
 	void reset() {
-		for (int i=0;i!=6;i++) {
+		for (int i=0;i!=counts.length;i++) {
 			counts[i] = 0;
 		}
 	}
@@ -23,13 +23,14 @@ class ColorCounter {
 			case RED: counts[RED]++; break;
 			case YELLOW: counts[YELLOW]++; break;
 			case TRACK: return;
+			case NONE: return;
 		}
 	}
 	
 	SkittleColor guess() {
 		int color = 0;
 		int max = 0;
-		for (int i=0;i!=6;i++) { 
+		for (int i=0;i!=counts.length;i++) { 
 			int count = counts[i];
 			if (count > 0) {
 				System.out.println("Found " + count + " for " + i);
@@ -54,6 +55,6 @@ class ColorCounter {
 		if (color == YELLOW) {
 			return SkittleColor.YELLOW;
 		}
-		return SkittleColor.TRACK;
+		return SkittleColor.NONE;
 	}
 }
