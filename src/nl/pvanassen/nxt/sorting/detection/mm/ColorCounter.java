@@ -1,8 +1,7 @@
-package nl.pvanassen.nxt.sorting.detection;
+package nl.pvanassen.nxt.sorting.detection.mm;
 
-import nl.pvanassen.nxt.sorting.MMColor;
 
-class MMColorCounter {
+class ColorCounter {
 	private int []counts = new int[6];
 	private static final int BLUE = 0;
 	private static final int BROWN = 1;

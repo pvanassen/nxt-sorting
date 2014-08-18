@@ -1,4 +1,4 @@
-package nl.pvanassen.nxt.sorting;
+package nl.pvanassen.nxt.sorting.detection.mm;
 
 public enum MMColor {
 	
@@ -8,7 +8,7 @@ public enum MMColor {
 		this.angle = angle;
 	}
 	
-	int getAngle() {
+	public int getAngle() {
 		return angle;
 	}
 }

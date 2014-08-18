@@ -4,15 +4,15 @@ import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
-import nl.pvanassen.nxt.sorting.detection.ColorCallback;
-import nl.pvanassen.nxt.sorting.detection.Detector;
+import nl.pvanassen.nxt.sorting.detection.mm.MMDetector;
 
-public class Sorter implements ColorCallback {
+public class Sorter {
 	private final Shute shute;
-	private final Detector detector;
+	private final MMDetector detector;
 	private static final int BELT_SPEED = 104;
 	
 	public Sorter() throws InterruptedException {
+		
 		// 100 -> 3250
 		// 200 -> 1500
 		// 300 -> 1000
@@ -24,7 +24,7 @@ public class Sorter implements ColorCallback {
 		shuteThread.start();
 		Motor.A.setSpeed(BELT_SPEED);
 		Motor.A.forward();
-		detector = new Detector(this, new ColorSensor(SensorPort.S1));
+		detector = new MMDetector(shute, new ColorSensor(SensorPort.S1));
 		Thread detectorThread = new Thread(detector);
 		detectorThread.setDaemon(true);
 		detectorThread.start();
@@ -39,10 +39,5 @@ public class Sorter implements ColorCallback {
 			Thread.sleep(250);
 		}
 		shute.stop();
-	}
-	
-	@Override
-	public void detected(MMColor color) {
-		shute.detected(color);
 	}
 }
