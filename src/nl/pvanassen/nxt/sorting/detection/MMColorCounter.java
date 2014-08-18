@@ -34,6 +34,10 @@ class MMColorCounter {
 		int max = 0;
 		for (int i=0;i!=6;i++) { 
 			int count = counts[i];
+			if (i == BROWN) {
+				// Lower count for brown
+				count = count / 2;
+			}
 			if (count > 0) {
 				System.out.println("Found " + count + " for " + i);
 			}
