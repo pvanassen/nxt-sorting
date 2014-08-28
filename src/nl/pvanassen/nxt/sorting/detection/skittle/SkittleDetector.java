@@ -106,7 +106,7 @@ public class SkittleDetector implements Runnable {
 	}
 
 	private boolean around(int color, int value) {
-		return between(color, value - 20, value + 20);
+		return between(color, value - 30, value + 30);
 	}
 
 	void stop() {

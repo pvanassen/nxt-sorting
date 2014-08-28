@@ -8,6 +8,7 @@ import nl.pvanassen.nxt.sorting.detection.ColorCallback;
 
 public class MMDetector implements Runnable {
 	private final ColorCallback colorCallback;
+	private final TouchSensor touchSensor = new TouchSensor(SensorPort.S2);
 	private final ColorSensor cs;
 	private boolean stop;
 
@@ -35,7 +36,6 @@ public class MMDetector implements Runnable {
 					if (color == MMColor.TRACK) {
 						tracks++;
 					}
-					System.out.println(color);
 				}
 				MMColor detected = counter.guess();
 				if (detected != MMColor.TRACK) {
@@ -51,61 +51,61 @@ public class MMDetector implements Runnable {
 
 	private MMColor getMMColor(ColorSensor cs) {
 		Color raw = cs.getColor();
-		if (new TouchSensor(SensorPort.S2).isPressed()) {
-			System.out.println("R" + raw.getRed() + " G" + raw.getGreen() + "B " + raw.getBlue());
+		if (touchSensor.isPressed()) {
+			System.out.println("R" + raw.getRed() + " G" + raw.getGreen() + " B" + raw.getBlue());
 		}
 		if (around(raw.getRed(), 85) && around(raw.getGreen(), 68)
 				&& around(raw.getBlue(), 62)) {
 			return MMColor.TRACK;
 		}
-		if (around(raw.getRed(), 146) && around(raw.getGreen(), 215)
-				&& around(raw.getBlue(), 284)) {
+		if (around(raw.getRed(), 139) && around(raw.getGreen(), 215)
+				&& around(raw.getBlue(), 275)) {
 			return MMColor.BLUE;
 		}
-		if (around(raw.getRed(), 124) && around(raw.getGreen(), 199)
-				&& around(raw.getBlue(), 274)) {
+		if (around(raw.getRed(), 156) && around(raw.getGreen(), 215)
+				&& around(raw.getBlue(), 265)) {
 			return MMColor.BLUE;
 		}
-		if (around(raw.getRed(), 311) && around(raw.getGreen(), 274)
-				&& around(raw.getBlue(), 134)) {
+		if (around(raw.getRed(), 277) && around(raw.getGreen(), 243)
+				&& around(raw.getBlue(), 130)) {
 			return MMColor.YELLOW;
 		}
-		if (around(raw.getRed(), 315) && around(raw.getGreen(), 279)
-				&& around(raw.getBlue(), 170)) {
+		if (around(raw.getRed(), 325) && around(raw.getGreen(), 296)
+				&& around(raw.getBlue(), 189)) {
 			return MMColor.YELLOW;
 		}
-		if (around(raw.getRed(), 150) && around(raw.getGreen(), 227)
-				&& around(raw.getBlue(), 138)) {
+		if (around(raw.getRed(), 162) && around(raw.getGreen(), 218)
+				&& around(raw.getBlue(), 151)) {
 			return MMColor.GREEN;
 		}
-		if (around(raw.getRed(), 180) && around(raw.getGreen(), 256)
-				&& around(raw.getBlue(), 163)) {
+		if (around(raw.getRed(), 170) && around(raw.getGreen(), 229)
+				&& around(raw.getBlue(), 161)) {
 			return MMColor.GREEN;
 		}
-		if (around(raw.getRed(), 310) && around(raw.getGreen(), 110)
-				&& around(raw.getBlue(), 74)) {
+		if (around(raw.getRed(), 260) && around(raw.getGreen(), 136)
+				&& around(raw.getBlue(), 116)) {
 			return MMColor.ORANGE;
 		}
-		if (around(raw.getRed(), 216) && around(raw.getGreen(), 154)
-				&& around(raw.getBlue(), 126)) {
+		if (around(raw.getRed(), 235) && around(raw.getGreen(), 146)
+				&& around(raw.getBlue(), 130)) {
 			return MMColor.ORANGE;
 		}
-		if (around(raw.getRed(), 293) && around(raw.getGreen(), 87)
-				&& around(raw.getBlue(), 106)) {
+		if (around(raw.getRed(), 234) && around(raw.getGreen(), 118)
+				&& around(raw.getBlue(), 118)) {
 			return MMColor.RED;
 		}
-		if (around(raw.getRed(), 282) && around(raw.getGreen(), 121)
-				&& around(raw.getBlue(), 146)) {
+		if (around(raw.getRed(), 277) && around(raw.getGreen(), 128)
+				&& around(raw.getBlue(), 132)) {
 			return MMColor.RED;
 		}
 		if (around(raw.getRed(), 146)
-				&& around(raw.getGreen(), 66)
-				&& around(raw.getBlue(), 66)) {
+				&& around(raw.getGreen(), 84)
+				&& around(raw.getBlue(), 78)) {
 			return MMColor.BROWN;
 		}
-		if (around(raw.getRed(), 166)
-				&& around(raw.getGreen(), 99)
-				&& around(raw.getBlue(), 100)) {
+		if (around(raw.getRed(), 177)
+				&& around(raw.getGreen(), 155)
+				&& around(raw.getBlue(), 149)) {
 			return MMColor.BROWN;
 		}
 		return MMColor.NONE;

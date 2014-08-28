@@ -39,7 +39,16 @@ class ColorCounter {
 				count = count / 2;
 			}
 			if (count > 0) {
-				System.out.println("Found " + count + " for " + i);
+				String cstr = "?";
+				switch (color) {
+					case BLUE: cstr =  "blue"; break;
+					case BROWN: cstr =  "brown"; break;
+					case GREEN: cstr =  "green"; break;
+					case ORANGE: cstr =  "orange"; break;
+					case RED: cstr =  "red"; break;
+					case YELLOW: cstr =  "yellow"; break;
+				}
+				System.out.println("Found " + count + " for " + cstr);
 			}
 			if (count > max) {
 				max = count;
