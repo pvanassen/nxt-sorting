@@ -40,7 +40,7 @@ class ColorCounter {
 			}
 			if (count > 0) {
 				String cstr = "?";
-				switch (color) {
+				switch (i) {
 					case BLUE: cstr =  "blue"; break;
 					case BROWN: cstr =  "brown"; break;
 					case GREEN: cstr =  "green"; break;

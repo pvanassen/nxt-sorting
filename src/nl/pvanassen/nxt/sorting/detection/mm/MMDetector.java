@@ -54,58 +54,52 @@ public class MMDetector implements Runnable {
 		if (touchSensor.isPressed()) {
 			System.out.println("R" + raw.getRed() + " G" + raw.getGreen() + " B" + raw.getBlue());
 		}
-		if (around(raw.getRed(), 85) && around(raw.getGreen(), 68)
-				&& around(raw.getBlue(), 62)) {
+		if (around(raw.getRed(), 105) && around(raw.getGreen(), 81)
+				&& around(raw.getBlue(), 64)) {
 			return MMColor.TRACK;
 		}
-		if (around(raw.getRed(), 139) && around(raw.getGreen(), 215)
-				&& around(raw.getBlue(), 275)) {
-			return MMColor.BLUE;
-		}
-		if (around(raw.getRed(), 156) && around(raw.getGreen(), 215)
-				&& around(raw.getBlue(), 265)) {
-			return MMColor.BLUE;
-		}
-		if (around(raw.getRed(), 277) && around(raw.getGreen(), 243)
-				&& around(raw.getBlue(), 130)) {
-			return MMColor.YELLOW;
-		}
-		if (around(raw.getRed(), 325) && around(raw.getGreen(), 296)
-				&& around(raw.getBlue(), 189)) {
-			return MMColor.YELLOW;
-		}
-		if (around(raw.getRed(), 162) && around(raw.getGreen(), 218)
-				&& around(raw.getBlue(), 151)) {
-			return MMColor.GREEN;
-		}
-		if (around(raw.getRed(), 170) && around(raw.getGreen(), 229)
-				&& around(raw.getBlue(), 161)) {
-			return MMColor.GREEN;
-		}
-		if (around(raw.getRed(), 260) && around(raw.getGreen(), 136)
-				&& around(raw.getBlue(), 116)) {
+		if (around(raw.getRed(), 308) && around(raw.getGreen(), 84)
+				&& around(raw.getBlue(), 55)) {
 			return MMColor.ORANGE;
 		}
-		if (around(raw.getRed(), 235) && around(raw.getGreen(), 146)
-				&& around(raw.getBlue(), 130)) {
+		if (around(raw.getRed(), 307) && around(raw.getGreen(), 125)
+				&& around(raw.getBlue(), 102)) {
 			return MMColor.ORANGE;
 		}
-		if (around(raw.getRed(), 234) && around(raw.getGreen(), 118)
-				&& around(raw.getBlue(), 118)) {
+		if (around(raw.getRed(), 150) && around(raw.getGreen(), 212)
+				&& around(raw.getBlue(), 113)) {
+			return MMColor.GREEN;
+		}
+		if (around(raw.getRed(), 180) && around(raw.getGreen(), 236)
+				&& around(raw.getBlue(), 147)) {
+			return MMColor.GREEN;
+		}
+		if (around(raw.getRed(), 305) && around(raw.getGreen(), 255)
+				&& around(raw.getBlue(), 125)) {
+			return MMColor.YELLOW;
+		}
+		if (around(raw.getRed(), 286) && around(raw.getGreen(), 66)
+				&& around(raw.getBlue(), 82)) {
 			return MMColor.RED;
 		}
-		if (around(raw.getRed(), 277) && around(raw.getGreen(), 128)
-				&& around(raw.getBlue(), 132)) {
+		if (around(raw.getRed(), 271) && around(raw.getGreen(), 103)
+				&& around(raw.getBlue(), 124)) {
 			return MMColor.RED;
 		}
-		if (around(raw.getRed(), 146)
-				&& around(raw.getGreen(), 84)
-				&& around(raw.getBlue(), 78)) {
+		if (around(raw.getRed(), 110) && around(raw.getGreen(), 180)
+				&& around(raw.getBlue(), 250)) {
+			return MMColor.BLUE;
+		}
+		if (around(raw.getRed(), 135) && around(raw.getGreen(), 190)
+				&& around(raw.getBlue(), 250)) {
+			return MMColor.BLUE;
+		}
+		if (around(raw.getRed(), 185) && around(raw.getGreen(), 133) && around(raw.getBlue(), 134)) {
 			return MMColor.BROWN;
 		}
-		if (around(raw.getRed(), 177)
-				&& around(raw.getGreen(), 155)
-				&& around(raw.getBlue(), 149)) {
+		if (around(raw.getRed(), 150)
+				&& around(raw.getGreen(), 66)
+				&& around(raw.getBlue(), 66)) {
 			return MMColor.BROWN;
 		}
 		return MMColor.NONE;
@@ -116,7 +110,7 @@ public class MMDetector implements Runnable {
 	}
 
 	private boolean around(int color, int value) {
-		return between(color, value - 20, value + 20);
+		return between(color, value - 25, value + 25);
 	}
 
 	void stop() {
